@@ -7,11 +7,14 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between">
                     @auth
+                    @if (Auth::id()== $post->user_id)
+                    <form action="{{route('post-delete', $post->id)}}" class="mt-2" method="POST">
+                        @csrf    
+                        <input type="submit" class="btn btn-danger btn-sm" value="delete Post">    
+                    </form>
+                        
+                    @endif
 
-                <form action="{{route('post-delete', $post->id)}}" class="mt-2" method="POST">
-                    @csrf    
-                    <input type="submit" class="btn btn-danger btn-sm" value="delete Post">    
-                </form>
                     @endauth
                 </div>
 
@@ -45,10 +48,13 @@
                             <hr>
                             <p>{{$comment->comment}}</p>
                             @auth
-                                <form action="{{route('comment-delete', $comment->id)}}" class="mt-2" method="POST">
-                                    @csrf
-                                    <input type="submit" class="btn btn-danger btn-sm" value="delete">    
-                                </form>    
+                            @if (Auth::id() == $post->user_id)
+                            <form action="{{route('comment-delete', $comment->id)}}" class="mt-2" method="POST">
+                                @csrf
+                                <input type="submit" class="btn btn-danger btn-sm" value="delete">    
+                            </form>    
+                                
+                            @endif
                             @endauth
                         </li>
                     @endforeach
