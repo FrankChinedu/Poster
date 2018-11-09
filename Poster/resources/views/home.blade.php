@@ -37,7 +37,7 @@
                         <div class="card-body">
                             <ul class="list-group">
                                 <video width="320" height="240" controls>
-                                <source src="{{__('http://127.0.0.1:8000').$p->url}}" type="video/mp4">
+                                <source src="{{url('/').$p->url}}" type="video/mp4">
                                     Your browser does not support the video tag.
                                 </video>
                                 <b>Comments-{{ count($p->comments) }}</b>
@@ -51,7 +51,7 @@
                         <div class="card-body">
                             <ul class="list-group">
                                 <li class="list-group-item mt-3">
-                                    <img src="{{__('http://127.0.0.1:8000').$p->url}}" class="img-thumbnail md-3" alt="">
+                                    <img src="{{url('/').$p->url}}" class="img-thumbnail md-3" alt="">
                                     <b>Comments-{{ count($p->comments) }}</b>
                                     <a href="{{route('post-show', $p->id)}}" class="btn btn-primary btn-sm">view</a>
                                 </li>
