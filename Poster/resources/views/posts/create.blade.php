@@ -32,11 +32,10 @@
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                             <div class="mt-4">
-                                <form action="{{route('post-add')}}" method="POST">
+                                <form action="{{route('post-add-text')}}" method="POST">
                                     @csrf
-                                    <input type="hidden" name="field" value="_text"  >
                                     <label for="exampleFormControlTextarea1">Text Posts</label>
-                                    <textarea class="form-control" name="text" id="exampleFormControlTextarea1" rows="3" required></textarea>
+                                    <textarea class="form-control {{ $errors->has('text') ? ' is-invalid' : '' }}" name="text" id="exampleFormControlTextarea1" rows="3" required></textarea>
                                     @if ($errors->has('text'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('text') }}</strong>
@@ -50,19 +49,18 @@
                         </div>
                         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                             <div class="mt-4">
-                                <form action="{{route('post-add')}}" method="POST" enctype="multipart/form-data">
+                                <form action="{{route('post-add-media')}}" method="POST" enctype="multipart/form-data">
                                     @csrf
-                                    <input type="hidden" name="field" value="vid_pic">
                                     <label for="exampleFormControlTextarea1">Posts Video / Picture</label>
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input" name="file" id="customFile" required>
                                         <label class="custom-file-label" for="customFile">Choose file</label>
-                                    </div>
-                                    @if ($errors->has('file'))
+                                        <input type="file" class="custom-file-input {{ $errors->has('file') ? ' is-invalid' : '' }}" name="file" required>
+                                        @if ($errors->has('file'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('file') }}</strong>
                                         </span>
-                                    @endif
+                                        @endif
+                                    </div>
                                     <div class="clearfix">
                                         <input type="submit" value="post" class=" float-right mt-3 btn btn-primary btn-sm">
                                     </div>

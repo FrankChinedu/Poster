@@ -24,12 +24,12 @@
                         
                         @elseif($post->type == 'video')
                         <video width="320" height="240" controls>
-                        <source src="{{__('http://127.0.0.1:8000').$post->url}}" type="video/mp4">
+                        <source src="{{url('/').$post->url}}" type="video/mp4">
                             Your browser does not support the video tag.
                         </video>
                         @else
                         <li class="list-group-item mt-3">
-                            <img src="{{__('http://127.0.0.1:8000').$post->url}}" class="img-thumbnail md-3" alt="">
+                            <img src="{{url('/').$post->url}}" class="img-thumbnail md-3" alt="">
                         </li>
                     @endif
                 </div>
@@ -72,6 +72,11 @@
                 <form action="{{route('comment-create', $post->id)}}" class="mt-2" method="POST">
                     @csrf
                     <input class="form-control form-control-sm {{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" required type="text" placeholder="your name">
+                    @if ($errors->has('name'))
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $errors->first('name') }}</strong>
+                        </span>
+                    @endif
                     <label for="exampleFormControlTextarea1" class="mt-2">Text Posts</label>
                     <textarea class="form-control {{ $errors->has('comment') ? ' is-invalid' : '' }}" name="comment" required id="exampleFormControlTextarea1" rows="3" required></textarea>
                     @if ($errors->has('comment'))

@@ -19,7 +19,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 // POSTS
 Route::get('/posts', 'PostController@index')->name('post-index');
 Route::get('/posts/create', 'PostController@create')->name('post-create');
-Route::post('/posts/create', 'PostController@add')->name('post-add');
+Route::post('/posts/create/text', 'PostController@addText')->name('post-add-text');
+Route::post('/posts/create/media', 'PostController@addMedia')->name('post-add-media');
 Route::post('/posts/delete/{id}', 'PostController@delete')->name('post-delete');
 Route::get('/posts/show/{id}', 'PostController@show')->name('post-show');
 
