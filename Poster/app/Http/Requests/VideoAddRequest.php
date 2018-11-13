@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PostMediaRequest extends FormRequest
+class VideoAddRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,7 @@ class PostMediaRequest extends FormRequest
     public function rules()
     {
         return [
-            'file' => 'required|mimes:jpeg,png,jpg,bmp,gif,svg,mp4|max:10000'
+            'file' => 'required|mimes:mp4|max:10000'
         ];  
     }
 
@@ -32,7 +32,7 @@ class PostMediaRequest extends FormRequest
     {
         return [
             'file.required' => 'Text is required!',
-            'file.mimes' => 'Must be type of video or picture!',
+            'file.mimes' => 'Must be type of video!',
         ];
     }
 }

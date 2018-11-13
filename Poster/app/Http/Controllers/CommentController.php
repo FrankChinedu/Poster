@@ -15,43 +15,53 @@ class CommentController extends Controller
         $this->middleware('auth');    
     }
 
-    public function add (CommentAddRequest $request, $post_id){
+    public function addPostComment (CommentAddRequest $request, $id){
         
+        $type = 'App\Model\Post';
+        $info = $this->saveComment($request, $id, $type);
+
+        return back()->with('status',$info);
+    }
+
+    public function addVideoComment(CommentAddRequest $request, $id)
+    {
+        $type = 'App\Model\Video';
+        $info = $this->saveComment($request, $id, $type);
+
+        return back()->with('status', $info);
+    }
+
+    public function saveComment($request,$id, $type) {
         $request->validated();
 
         try {
             $comment = new Comment();
-            $comment->name = $request->name;
-            $comment->comment = $request->comment;
-            $comment->post_id = $post_id;
+            $comment->body = $request->body;
+            $comment->user_id = Auth::id();
+            $comment->commentable_type = $type;
+            $comment->commentable_id = $id;
             $comment->save();
-    
-            return back()->with('status', 'comment added');
-        }catch (\Exception $e){
-            $e->getMessage();
+
+            return  'comment added';
+        } catch (\Exception $e) {
+            return $e->getMessage();
         }
     }
 
+    
+
     public function delete(Request $request, $comment_id) {
+        $comment = Comment::findorfail($comment_id);
 
-        $isOwner = $this->isOwner($comment_id);
-
-        if ($isOwner) {
-            Comment::findorfail($comment_id)->delete();
-            return back()->with('status', 'comment deleted successfully');
+        if (Auth::check() && Auth::id() == $comment->user_id) {
+            try{
+                $comment->delete();
+                return back()->with('status', 'comment deleted successfully');
+            }catch(\Exception $e) {
+                return $e->getMessage();
+            }
         }
-        
         return back();
     }
 
-    private function isOwner($comment_id)
-    {
-        $comment = Comment::findorfail($comment_id);
-        $owner = $comment->post->user_id;
-
-        if (Auth::id() == $owner) {
-            return true;
-        }
-        return false;
-    }
 }

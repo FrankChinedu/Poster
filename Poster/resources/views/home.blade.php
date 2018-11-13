@@ -17,59 +17,39 @@
                   
             </div>
 
-            @if (count($posts)> 0)
+            @if (count($posts)> 0 || count($videos) > 0 )
             
                 @foreach ($posts as $p)
-                    @if ($p->type == 'text')
                     <div class="card mt-3">
                         <div class="card-body">
                             <ul class="list-group">
                                 <li class="list-group-item mt-3">{{$p->text}}</li>
-                                <b>Comments-{{ count($p->comments) }}</b>
+                                {{-- <b>Comments-{{ count($p->comments) }}</b> --}}
                                 
                                 <a href="{{route('post-show', $p->id)}}" class="btn btn-primary btn-sm">view</a>
                             </ul>
                         </div>
                         <hr>
-                    </div>
-                                @elseif($p->type == 'video')
-                    <div class="card mt-3">
+                    </div>        
+                @endforeach
+
+                @foreach ($videos as $v)
+                <div class="card mt-3">
                         <div class="card-body">
                             <ul class="list-group">
                                 <video width="320" height="240" controls>
-                                <source src="{{url('/').$p->url}}" type="video/mp4">
+                                <source src="{{url('/').$v->url}}" type="video/mp4">
                                     Your browser does not support the video tag.
                                 </video>
-                                <b>Comments-{{ count($p->comments) }}</b>
-                                <a href="{{route('post-show', $p->id)}}" class="btn btn-primary btn-sm">view</a>
+                                {{-- <b>Comments-{{ count($p->comments) }}</b> --}}
+                                <a href="{{route('video-show', $v->id)}}" class="btn btn-primary btn-sm">view</a>
                             </ul>
                         </div>
                         <hr>
                     </div>
-                                @else
-                    <div class="card mt-3">
-                        <div class="card-body">
-                            <ul class="list-group">
-                                <li class="list-group-item mt-3">
-                                    <img src="{{url('/').$p->url}}" class="img-thumbnail md-3" alt="">
-                                    <b>Comments-{{ count($p->comments) }}</b>
-                                    <a href="{{route('post-show', $p->id)}}" class="btn btn-primary btn-sm">view</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <hr>
-                    </div>
-                                @endif
-                                
-                            @endforeach
-
-                        <ul class="d-flex justify-content-between mt-3">
-                            <li><a class="" href="{{ $posts->previousPageUrl() }}"><i>prev</i></a></li>
-                            <li><a class="" href="#">{{ $posts->currentPage() }} </a></li>
-                            <li><a class="" href="#">of</a></li>
-                            <li><a class="" href="#">{{ $posts->lastPage()}}</a></li>
-                            <li><a class="" href="{{ $posts->nextPageUrl() }}"> <i></i>next</a></li>
-                        </ul>
+                    
+                @endforeach
+                
                 @else
                     <h4>No Posts yet start creating post</h4>
                 @endif

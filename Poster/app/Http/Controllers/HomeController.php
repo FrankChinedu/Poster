@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Model\Post;
+use Illuminate\Support\Facades\DB;
+use App\Model\Video;
 
 class HomeController extends Controller
 {
@@ -22,11 +24,13 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Post $post)
+    public function index()
     {
-        $posts = $post::latest()->paginate(20);
+        $posts = Post::latest()->take(20)->get();
+        $videos = Video::latest()->take(20)->get();
         
         return view('home', [
+            'videos'=>$videos,
             'posts' => $posts
         ]);
     }

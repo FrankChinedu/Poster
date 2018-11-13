@@ -24,16 +24,14 @@ class CommentAddRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|min:3',
-            'comment' => 'required'
+            'body' => 'required|min:3'
         ];
     }
 
     public function messages()
     {
         return [
-            'name.required' => 'Name is required!',
-            'comment.required' => 'comment is required!'
+            'body.required' => 'comment is required!'
         ];
     }
 }

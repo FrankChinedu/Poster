@@ -49,9 +49,9 @@
                         </div>
                         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                             <div class="mt-4">
-                                <form action="{{route('post-add-media')}}" method="POST" enctype="multipart/form-data">
+                                <form action="{{route('add-video')}}" method="POST" enctype="multipart/form-data">
                                     @csrf
-                                    <label for="exampleFormControlTextarea1">Posts Video / Picture</label>
+                                    <label for="exampleFormControlTextarea1">Add Video</label>
                                     <div class="custom-file">
                                         <label class="custom-file-label" for="customFile">Choose file</label>
                                         <input type="file" class="custom-file-input {{ $errors->has('file') ? ' is-invalid' : '' }}" name="file" required>
