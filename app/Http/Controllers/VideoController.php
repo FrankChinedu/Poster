@@ -47,11 +47,11 @@ class VideoController extends Controller
 
     public function delete(Request $request, $id){
 
-        $post = Post::findorfail($id);
+        $video = Video::findorfail($id);
 
-        if (Auth::check() && Auth::id() == $post->user_id) {
+        if (Auth::check() && Auth::id() == $video->user_id) {
             try {
-                $post->delete();
+                $video->delete();
                 return redirect()->to('/')->with('status', 'Post deleted');
             } catch (\Exception $e) {
                 $e->getMessage();

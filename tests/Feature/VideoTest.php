@@ -2,38 +2,39 @@
 
 namespace Tests\Feature;
 
+
 use Tests\TestCase;
-use App\Model\Post;
+use App\Model\Video;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
-
-class PostTest extends TestCase
+class VideoTest extends TestCase
 {
+
     use RefreshDatabase;
     /**
      * A basic test example.
      *
      * @return void
      */
-    public function testCreatePost()
+    public function testCreateVideo()
     {
         $user = factory(\App\User::class)->create();
-        $post = Post::create([
+        $post = Video::create([
             'user_id' => $user->id,
-            'text' => request('text'),
+            'url' => request('url'),
         ]);
 
-        $this->assertDatabaseHas('posts',[
+        $this->assertDatabaseHas('videos', [
             'user_id' => $user->id,
-            'text' => request('text'),
+            'url' => request('url'),
         ]);
 
     }
 
-    public function testDeletePost(){
-        $response = $this->post('/posts/delete/1');
-        $this->assertDatabaseMissing('posts', ['id' => 1]);
+    public function testDeleteVideo()
+    {
+        $response = $this->post('/video/delete/1');
+        $this->assertDatabaseMissing('videos', ['id' => 1]);
     }
-
 }
